@@ -1,0 +1,207 @@
+Step 1: Verify the Java installed
+Step 2: Extract Hadoop at C:\Hadoop
+Step 3: Setting up the HADOOP_HOME variable
+Step 4: Set JAVA_HOME variable
+Step 5: Set Hadoop and Java bin directory path
+Step 6: Hadoop Configuration :
+
+For Hadoop Configuration we need to modify Six files that are listed below-
+
+1. Core-site.xml
+2. Mapred-site.xml
+3. Hdfs-site.xml
+4. Yarn-site.xml
+5. Hadoop-env.cmd
+6. Create two folders datanode and namenode
+
+Step 6.1: Core-site.xml configuration
+
+<configuration>
+   <property>
+       <name>fs.defaultFS</name>
+       <value>hdfs://localhost:9000</value>
+   </property>
+</configuration>
+
+Step 6.2: Mapred-site.xml configuration
+
+<configuration>
+   <property>
+       <name>mapreduce.framework.name</name>
+       <value>yarn</value>
+   </property>
+</configuration>
+
+Step 6.3: Hdfs-site.xml configuration
+
+<configuration>
+   <property>
+       <name>dfs.replication</name>
+       <value>1</value>
+   </property>
+   <property>
+       <name>dfs.namenode.name.dir</name>
+       <value>file:///C:/hadoop-3.4.1/data/namenode</value>
+   </property>
+   <property>
+       <name>dfs.datanode.data.dir</name>
+       <value>file:///C:/hadoop-3.4.1/data/datanode</value>
+   </property>
+</configuration>
+
+Step 6.4: Yarn-site.xml configuration
+
+<configuration>
+   <property>
+        <name>yarn.nodemanager.aux-services</name>
+        <value>mapreduce_shuffle</value>
+   </property>
+   <property>
+          <name>yarn.nodemanager.auxservices.mapreduce.shuffle.class</name>  
+    <value>org.apache.hadoop.mapred.ShuffleHandler</value>
+   </property>
+</configuration>
+
+Step 6.5: Hadoop-env.cmd configuration
+
+Set "JAVA_HOME=C:\Java" (On C:\java this is path to file jdk.18.0)
+
+Step 6.6: Create datanode and namenode folders
+1. Create folder "data" under "C:\hadoop-3.4.1"
+2. Create folder "datanode" under "C:\hadoop-3.4.1\data"
+3. Create folder "namenode" under "C:\hadoop-3.4.1\data"
+
+
+For Windows Users Only
+Download winutils https://github.com/cdarlint/winutils
+Copy bin folder from latest version of winutils
+Paste bin folder inside C:\hadoop-3.4.1
+It will ask to replace files - Click yes to replace all files
+
+
+Step 7: Format the namenode folder
+
+Open command window (cmd) and typing command “hdfs namenode –format”
+
+Step 8: Testing the setup
+
+Start all Hadoop daemons (NameNode, DataNode, etc.):
+Open command window (cmd) as admin inside C:/hadoop-3.4.1/sbin and 
+typing command “start-all.cmd”
+
+Step 8.1: Testing the setup:
+Ensure that namenode, datanode, Node Manager and Resource manager are running
+
+Step 9: 
+Open: http://localhost:8088
+
+Step 10: 
+Open: http://localhost:9870
+
+
+Stop all Hadoop daemons:
+stop-all.sh
+
+Start NameNode only:
+start-dfs.sh
+
+Start YARN ResourceManager and NodeManager
+start-yarn.sh
+
+Stop YARN services:
+stop-yarn.sh
+
+
+===============HDFS Commands===============
+Creation of directory called bigdata
+hdfs dfs -mkdir /path/to/new_directory
+hadoop fs -mkdir /bigdata
+
+
+Listing of Directory Contents
+hadoop fs -ls /
+hdfs dfs -ls /path/to/directory
+
+
+Copying Text Files to the Hadoop Distributed File System (HDFS)
+hadoop fs -put ukhousetransactions.txt /bigdata
+
+Listing of copied files to HDFS
+hadoop fs -ls -R /
+
+Copy a file from HDFS to the local file system:
+hdfs dfs -get /hdfs/file/path /local/directory/path
+
+View the content of a file in HDFS:
+hdfs dfs -cat /hdfs/file/path
+
+
+Delete a file or directory in HDFS
+hdfs dfs -rm /hdfs/file/path
+hdfs dfs -rm -r /hdfs/directory/path
+
+
+Set replication factor for a file:
+hdfs dfs -setrep -w 3 /path/to/file
+
+
+**********Commands for java**********
+- hdfs dfs -mkdir /input_data
+- hdfs dfs -put file_name.txt /input_data
+- hadoop jar word_count.jar DriverCode /input_data/file_name.txt /output_dir
+- hadoop dfs -cat /output_dir/*
+
+
+**********Commands for Python**********
+Run the Program Locally Use the command-line pipeline to simulate MapReduce
+Linux Commmand - cat input.txt | python3 mapper.py | sort | python3 reducer.py
+Window Command - type input.txt | python mapper.py | sort | python reducer.py
+
+
+
+1. Upload Input File to HDFS
+hdfs dfs -mkdir /wordcount
+hdfs dfs -put input.txt /wordcount/
+
+2. Run MapReduce with Hadoop Streaming
+Use the hadoop streaming utility to run the Python MapReduce program on the Hadoop cluster:
+
+Linux Command
+hadoop jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-*.jar \
+    -mapper "python3 mapper.py" \
+    -reducer "python3 reducer.py" \
+    -input /wordcount/input.txt \
+    -output /wordcount/output
+
+Windows Command
+hadoop jar %HADOOP_HOME%\share\hadoop\tools\lib\hadoop-streaming-*.jar -mapper "python D:\Xebia\2025\UPES\T3_FDP_BigData\PythonMapReduce\mapper.py" -reducer "python D:\Xebia\2025\UPES\T3_FDP_BigData\PythonMapReduce\reducer.py" -input /upes/animals_data.txt -output /wordcount/output
+
+
+3. View the Output
+Check the output directory in HDFS:
+
+hdfs dfs -ls /wordcount/output
+hdfs dfs -cat /wordcount/output/part-00000
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,74 @@
+Data Ingestion
+- process of collecting and importing data from various sources into a centralized repository or system
+- it's a first step in building data pipeline
+
+1. Batch Ingestion - Data is ingested in large chunks at scheduled intervals
+2. Real-time Ingestion - Data is ingested as soon as it is created
+3. Streaming Ingestion - Continuous ingestions of data in streams
+
+Batch Ingestion
+- Apache Sqoop
+- Talend
+- Informatica
+- Azure Data Factory
+- AWS Glue
+
+Real-time ingestion
+- Apache Kafka
+- Apache Flume
+- Amazon Kinesis
+
+Hybrid Data Ingestion (Batch + Real-time)
+- Apache NiFi
+- StreamSets
+- Airbyte
+
+Specialized Data Ingestion for Big Data
+- HDFS - Flume or Sqoop could be used to ingest data into hadoop
+- Elastic Logstash - Part of ELK stack
+
+
+Which one is the right tool ?
+1. Data Volume - Kafka, NiFi
+2. Data Velocity - Kinesis or Flume
+3. Data Variety - Talend or NiFi
+4. Cloud - AWS Glue, Azure Data Factory
+
+============================================
+Sqoop Commands
+
+1. List databases in MySQL
+sqoop list-databases --connect jdbc:mysql://localhost/ --username sqoop -P
+
+2. Import Data from RDBMS to HDFS
+sqoop import \
+--connect jdbc:mysql://<db_host>:<db_port>/<db_name> \
+--username <db_user> \
+--table <table_name> \
+--target_dir <hdfs_target_path>
+--num-mappers 4
+--where "column_name=value"
+
+3. List tables in database
+sqoop list-tables --connect jdbc:mysql://localhost/upes_db --username sqoop -P
+
+4. Evaluate SQL Queries
+sqoop eval --connect jdbc:mysql://localhost/upes_db --username sqoop --query "SELECT * FROM students" -P
+
+5. Import table from MySQL into HDFS
+sqoop import --connect jdbc:mysql://localhost/upes_db --username sqoop --table students --target-dir /sqoop_data/students --num-mappers 1 --fields-terminated-by "," --lines-terminated-by "\n" -P
+
+
+6. Create Sqoop Job to reuse the command
+Step-1 : Create Job
+sqoop job --create import_students_data -- import --connect jdbc:mysql://localhost/upes_db --username sqoop --table students --target-dir /sqoop_data/students --num-mappers 1 --fields-terminated-by "," --lines-terminated-by "\n" -P
+
+Step-2 : Executing the job
+sqoop job --exec import_students_data
+
+
+
+
+
+
+

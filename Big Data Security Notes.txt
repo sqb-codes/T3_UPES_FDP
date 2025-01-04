@@ -1,0 +1,73 @@
+Secure Distributed Systems
+
+Threat Categories
+- External Threats - Attack originated from external sources like hacking, malware
+- Internal Threats - Malicious insiders or unintentional breaches like privilege misuse
+- Advanced Persistent Threats
+
+
+Threat and Risk Assessment
+1. Identify Threat
+2. Analyze Vulnerabilities
+3. Evaluate Risks
+4. Mitigation Strategies
+
+
+Kerberos
+- Prevents unauthorized access by authenticating clients and services
+
+Kerberos Workflow
+1. Authentication Request - Client sends a request to Authentication server (AS)
+2. Ticket Granting Ticket - AS issues a TGT to client
+3. Service Request - Client uses the TGT to request access to a specific service from TGT
+4. Service Access - Client receives a service Ticket and accesses the resource
+
+MIT Kerberos
+- Implementation of Kerberos protocol, mainly used in distributed systems for secure authentication
+
+
+Sentry Service
+- Provides fine-grained authorization for data in distributed systems
+
+Sentry Privilege models
+- RBAC - Role based access control
+  - Privileges - Permission granted to a role
+  - Roles - Assigned to users or groups
+  - Resources - Databases, tables (Objects being accessed)
+
+
+Data Protection in Distributed Environments
+
+Integrity of Ingested Data
+- Ensure that ingested data is complete, unaltered and authentic
+
+2 methods to check integrity
+- Checksum validation - verify the data integrity during transmission
+- Hashing Algorithm - SHA, MD5 for integrity verification
+
+
+Data Ingest Confidentiality
+- Protecting sensitive data
+  - Authentication
+  - Encryption
+
+
+Encryption Algorithms
+- Symmetric - Same key for encryption and decryption (AES, DES)
+- Asymmetric - Public and Private key pair (RSA)
+
+
+Encryption Data at Rest
+- Full-disk encryption
+- File-level encryption
+- Transparent Data Encryption
+
+
+Encrypting Data in Transit
+- TLS/SSL - Secure communication between endpoints
+- VPNs - Encrypted tunnels for network communications
+
+
+
+
+
